@@ -2,11 +2,13 @@
 
 Based on https://github.com/22phuber/docker-compose-chamilo-lms
 
+Start the application with:
+
 ```
 docker-compose up chamilo
 ```
 
-Sign in as:
+Open `http://localhost:8080` and sign in as:
 
 * User: admin
 * Password: admin@chamilo
