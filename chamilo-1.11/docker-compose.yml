@@ -1,0 +1,43 @@
+version: "3.5"
+services:
+  chamilo:
+    build:
+      context: .
+      args:
+        - CHAMILO_VERSION=1.11.10
+        - CHAMILO_TAR=chamilo-1.11.10-php7.tar.gz
+    links:
+      - mysql
+    ports:
+      - "8080:80"
+    extra_hosts:
+      - "docker.chamilo.net:127.0.0.1"
+    depends_on:
+      - mysql
+    volumes:
+      - ./files/config/add_course.conf.php:/var/www/chamilo/app/config/add_course.conf.php
+      - ./files/config/auth.conf.php:/var/www/chamilo/app/config/auth.conf.php
+      - ./files/config/configuration.php:/var/www/chamilo/app/config/configuration.php
+      - ./files/config/course_info.conf.php:/var/www/chamilo/app/config/course_info.conf.php
+      - ./files/config/events.conf.php:/var/www/chamilo/app/config/events.conf.php
+      - ./files/config/mail.conf.php:/var/www/chamilo/app/config/mail.conf.php
+      - ./files/config/profile.conf.php:/var/www/chamilo/app/config/profile.conf.php
+  mysql:
+    restart: always
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_USER=chamilo
+      - MYSQL_PASSWORD=chamilo
+      - MYSQL_DATABASE=chamilo
+    ports:
+      - 8306:3306
+    volumes:
+      - ../.volumes/chamilo-1.11/mysql:/var/lib/mysql
+    # volumes:
+    #   - 'mysql_data:/chamilo'
+# volumes:
+#   mysql_data:
+#     driver: local
+#   chamilo_data:
+#     driver: local
