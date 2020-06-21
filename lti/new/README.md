@@ -21,9 +21,9 @@ EXTERNAL_URL=9a772b7b6221.ngrok.io docker-compose up app
 
 Open up http://ltiapps.net/test/tc.php and configure it with:
 
-* Launch URL: http://9a772b7b6221.ngrok.io/lti/tool/messages/blti
-* Consumer key: elos
-* Shared secret: e61ce366827710661da01f0a12c88713e591880b
+* Launch URL: `http://9a772b7b6221.ngrok.io/lti/tool/messages/blti`
+* Consumer key: `elos`
+* Shared secret: `e61ce366827710661da01f0a12c88713e591880b`
 
 The key and secret are defined by `bbb-lti-broker-seeds.rb` and `bbb-app-rooms-dotenv`.
 
