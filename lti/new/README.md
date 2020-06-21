@@ -34,5 +34,5 @@ Press "Launch TP in a new window" and use it.
 * There's an nginx running on `localhost:3000` and redirecting the requests to the appropriate app.
 * We need an external URL otherwise the apps can't communicate with each other and with the browser
   also.
-* When upping the containers, they will build assets, migrate the database and seed it, so it
+* When upping the containers, they will migrate the database and seed it, so it
   takes a while. Follow it watching the logs (e.g. `docker logs -f new_broker_1`).
