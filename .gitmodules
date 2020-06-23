@@ -1,6 +1,0 @@
-[submodule "lti/new/bbb-lti-broker"]
-	path = lti/new/bbb-lti-broker
-	url = https://github.com/mconf/bbb-lti-broker
-[submodule "lti/new/bbb-app-rooms"]
-	path = lti/new/bbb-app-rooms
-	url = https://github.com/mconf/bbb-app-rooms

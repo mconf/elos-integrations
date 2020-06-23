@@ -16,11 +16,7 @@ services:
     command: /bin/bash -c "envsubst '$$NGINX_HOSTNAME' < /tmp/sites.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
 
   broker:
-    # TODO: get from images once we have them
-    build:
-      context: ./bbb-lti-broker
-      args:
-        RAILS_ENV: production
+    image: mconf/bbb-lti-broker:elos
     env_file: bbb-lti-broker-dotenv
     environment:
       DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:password@postgres:5432/lti_broker}
@@ -37,11 +33,7 @@ services:
       - postgres
 
   rooms:
-    # TODO: get from images once we have them
-    build:
-      context: ./bbb-app-rooms
-      args:
-        RAILS_ENV: production
+    image: mconf/bbb-app-rooms:elos
     env_file: bbb-app-rooms-dotenv
     environment:
       DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:password@postgres:5432/lti_rooms}

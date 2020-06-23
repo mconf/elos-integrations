@@ -1,11 +1,5 @@
 # How to run it
 
-Get the source code:
-
-```
-git submodule update
-```
-
 Download [ngrok](https://ngrok.com/) and run it with:
 
 ```
