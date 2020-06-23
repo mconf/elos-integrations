@@ -26,6 +26,8 @@ services:
       DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:password@postgres:5432/lti_broker}
       URL_HOST: ${EXTERNAL_URL}
       APP_ROOMS_URL: http://${EXTERNAL_URL}
+      OMNIAUTH_BBBLTIBROKER_KEY: elos
+      OMNIAUTH_BBBLTIBROKER_SECRET: e61ce366827710661da01f0a12c88713e591880b
     volumes:
       - ./bbb-lti-broker-seeds.rb:/usr/src/app/db/seeds.rb
       - ./bbb-lti-broker-start.sh:/usr/src/app/scripts/start.sh
@@ -45,6 +47,8 @@ services:
       DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:password@postgres:5432/lti_rooms}
       URL_HOST: ${EXTERNAL_URL}
       OMNIAUTH_BBBLTIBROKER_SITE: http://${EXTERNAL_URL}
+      OMNIAUTH_BBBLTIBROKER_KEY: elos
+      OMNIAUTH_BBBLTIBROKER_SECRET: e61ce366827710661da01f0a12c88713e591880b
     # ports:
     #   - "3002:3000"
     links:

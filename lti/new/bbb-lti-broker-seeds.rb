@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-key_name = 'elos'
-secret = 'e61ce366827710661da01f0a12c88713e591880b'
+key_name = ENV['OMNIAUTH_BBBLTIBROKER_KEY']
+secret = ENV['OMNIAUTH_BBBLTIBROKER_SECRET']
 
 default_keys = [
   { key: key_name, secret: secret }

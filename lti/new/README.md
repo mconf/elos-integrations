@@ -25,7 +25,7 @@ Open up http://ltiapps.net/test/tc.php and configure it with:
 * Consumer key: `elos`
 * Shared secret: `e61ce366827710661da01f0a12c88713e591880b`
 
-The key and secret are defined by `bbb-lti-broker-seeds.rb` and `bbb-app-rooms-dotenv`.
+The key and secret are defined by env variables in `docker-compose.yml`.
 
 Press "Launch TP in a new window" and use it.
 
