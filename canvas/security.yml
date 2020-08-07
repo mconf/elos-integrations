@@ -1,0 +1,9 @@
+production: &default
+  encryption_key: 60c95eb8c0572bede91e01d7b55360080f0d6178
+  lti_iss: 'https://canvas.instructure.com'
+
+development:
+  <<: *default
+
+test:
+  <<: *default

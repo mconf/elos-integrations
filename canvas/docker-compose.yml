@@ -1,0 +1,40 @@
+# See doc/docker/README.md or https://github.com/instructure/canvas-lms/tree/master/doc/docker
+version: '2.3'
+services:
+  web: &WEB
+    build:
+      context: ./canvas-lms/
+    ports:
+      - "8080:80"
+    volumes:
+      - ./canvas-lms/docker-compose/config/database.yml:/usr/src/app/config/database.yml
+      - ./canvas-lms/docker-compose/config/cache_store.yml:/usr/src/app/config/cache_store.yml
+      - ./canvas-lms/docker-compose/config/cassandra.yml:/usr/src/app/config/cassandra.yml
+      - ./canvas-lms/docker-compose/config/consul.yml:/usr/src/app/config/consul.yml
+      - ./canvas-lms/docker-compose/config/delayed_jobs.yml:/usr/src/app/config/delayed_jobs.yml
+      - ./canvas-lms/docker-compose/config/dynamic_settings.yml:/usr/src/app/config/dynamic_settings.yml
+      - ./canvas-lms/docker-compose/config/outgoing_mail.yml:/usr/src/app/config/outgoing_mail.yml
+      - ./canvas-lms/docker-compose/config/redis.yml:/usr/src/app/config/redis.yml
+      - ./canvas-lms/docker-compose/config/selenium.yml:/usr/src/app/config/selenium.yml
+      - ./canvas-lms/docker-compose/config/vault.yml:/usr/src/app/config/vault.yml
+      - ./security.yml:/usr/src/app/config/security.yml
+      - ./domain.yml:/usr/src/app/config/domain.yml
+    links:
+      - postgres
+      - redis
+    environment:
+      POSTGRES_PASSWORD: sekret
+
+  jobs:
+    <<: *WEB
+    command: bundle exec script/delayed_job run
+
+  postgres:
+    build: ./canvas-lms/docker-compose/postgres
+    environment:
+      POSTGRES_PASSWORD: sekret
+    volumes:
+      - ../.volumes/canvas/postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine

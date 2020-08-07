@@ -1,0 +1,3 @@
+[submodule "canvas/canvas-lms"]
+	path = canvas/canvas-lms
+	url = git@github.com:instructure/canvas-lms.git
