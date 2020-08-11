@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "3000:80"
+      - "3443:443"
+    depends_on:
+      - broker
+      - rooms
+    command: /bin/bash -c "exec nginx -g 'daemon off;'"
+    # command: /bin/bash -c "envsubst '$$NGINX_HOSTNAME' < /tmp/sites.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
+
+  broker:
+    image: mconf/bbb-lti-broker:dev-0.1.x-elos
+    env_file: bbb-lti-broker-dotenv
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:password@postgres:5432/lti_broker}
+      URL_HOST: ${EXTERNAL_URL}
+      APP_ROOMS_URL: https://${EXTERNAL_URL}
+      CONSUMER_KEY: test-key
+      CONSUMER_SECRET: 87e9393a73c15942eac42d89bc14c540f4eae2b6
+    volumes:
+      - ./bbb-lti-broker-seeds.rb:/usr/src/app/db/seeds.rb
+      - ./bbb-lti-broker-start.sh:/usr/src/app/scripts/start.sh
+    links:
+      - postgres
+
+  rooms:
+    image: mconf/bbb-app-rooms:dev-0.1.x-elos
+    env_file: bbb-app-rooms-dotenv
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:password@postgres:5432/lti_rooms}
+      URL_HOST: ${EXTERNAL_URL}
+      OMNIAUTH_BBBLTIBROKER_SITE: https://${EXTERNAL_URL}
+    links:
+      - postgres
+
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ../.volumes/lti/postgres/:/var/lib/postgresql/data
+    # ports:
+    #   - "5432:5432"

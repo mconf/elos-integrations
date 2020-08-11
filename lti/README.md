@@ -1,9 +1,20 @@
 # How to run it
 
-Download [ngrok](https://ngrok.com/) and run it with:
+Download ngrok and sign up: https://ngrok.com/signup
+
+Install it and connect to your account:
 
 ```
-ngrok http 3000
+ngrok authtoken skia8d9V9nxRC9jwfgfnQ76laos09d87L4f2B78N37Jdfocmdj
+```
+
+Run it so it creates a tunnel to an internal HTTPS server. Running the LTI in an HTTP server
+won't work when integrating it in some LMSs (e.g. Canvas running in another container).
+
+Run it with:
+
+```
+ngrok http https://localhost:3443
 ```
 
 Copy the URL it created (e.g. `9a772b7b6221.ngrok.io`) and run docker-compose with:
@@ -15,9 +26,9 @@ EXTERNAL_URL=9a772b7b6221.ngrok.io docker-compose up app
 
 Open up http://ltiapps.net/test/tc.php and configure it with:
 
-* Launch URL: `http://9a772b7b6221.ngrok.io/lti/tool/messages/blti`
-* Consumer key: `elos`
-* Shared secret: `e61ce366827710661da01f0a12c88713e591880b`
+* Launch URL: `https://9a772b7b6221.ngrok.io/lti/tool/messages/blti`
+* Consumer key: `test-key`
+* Shared secret: `87e9393a73c15942eac42d89bc14c540f4eae2b6`
 
 The key and secret are defined by env variables in `docker-compose.yml`.
 

@@ -9,10 +9,15 @@ upstream docker-rooms {
 server {
     # server_name $NGINX_HOSTNAME;
 
-    listen  80;
+    listen 80;
     listen [::]:80;
 
-    location ~ ^(/apps/rooms|/cable) {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    ssl_certificate /etc/nginx/certs/cert.pem;
+    ssl_certificate_key /etc/nginx/certs/key.pem;
+
+    location ~ ^(/rooms|/cable) {
         proxy_pass  http://docker-rooms;
 
         proxy_read_timeout 60s;

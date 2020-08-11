@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-key_name = ENV['OMNIAUTH_BBBLTIBROKER_KEY']
-secret = ENV['OMNIAUTH_BBBLTIBROKER_SECRET']
-
 default_keys = [
-  { key: key_name, secret: secret }
+  { key: ENV['CONSUMER_KEY'], secret: ENV['CONSUMER_SECRET'] }
 ]
 
 default_keys.each do |default_key|
@@ -24,12 +21,14 @@ default_keys.each do |default_key|
   end
 end
 
+puts RailsLti2Provider::Tool.all.inspect
+
 default_tools = [
   {
-    name: 'tool',
-    uid: key_name,
-    secret: secret,
-    redirect_uri: "#{ENV['APP_ROOMS_URL']}/apps/rooms/auth/bbbltibroker/callback",
+    name: 'rooms',
+    uid: ENV['OMNIAUTH_BBBLTIBROKER_KEY'],
+    secret: ENV['OMNIAUTH_BBBLTIBROKER_SECRET'],
+    redirect_uri: "#{ENV['APP_ROOMS_URL']}/rooms/auth/bbbltibroker/callback",
     scopes: 'api'
   }
 ]
@@ -44,3 +43,5 @@ default_tools.each do |default_tool|
     Doorkeeper::Application.create!(default_tool)
   end
 end
+
+puts Doorkeeper::Application.all.inspect
